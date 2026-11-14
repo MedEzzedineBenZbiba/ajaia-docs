@@ -3,6 +3,7 @@ import { requireUser } from "@/lib/auth";
 import { listDocuments, type DocSummary } from "@/lib/documents";
 import NewDocButton from "@/components/NewDocButton";
 import LocalTime from "@/components/LocalTime";
+import UploadButton from "@/components/UploadButton";
 
 function Section({
   title,
@@ -80,7 +81,10 @@ export default async function Dashboard() {
           </form>
         </div>
       </header>
-      <NewDocButton />
+      <div className="flex flex-wrap items-start gap-4">
+        <NewDocButton />
+        <UploadButton />
+      </div>
       <Section
         title="Owned by me"
         docs={owned}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAccess, canEdit, canShare } from "./access";
+import { getAccess, canEdit, canShare } from "../src/lib/access";
 
 const doc = { owner_id: "u_alice" };
 

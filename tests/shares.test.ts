@@ -2,14 +2,14 @@ import { beforeAll, afterAll, describe, it, expect } from "vitest";
 import fs from "node:fs";
 
 const DB_FILE = "test-shares.db";
-let docs: typeof import("./documents");
-let shares: typeof import("./shares");
+let docs: typeof import("../src/lib/documents");
+let shares: typeof import("../src/lib/shares");
 
 beforeAll(async () => {
   fs.rmSync(DB_FILE, { force: true });
   process.env.DATABASE_URL = `file:${DB_FILE}`;
   process.env.DATABASE_AUTH_TOKEN = "";
-  const { db, SCHEMA } = await import("./db"); // dynamic import so the env var is set first
+  const { db, SCHEMA } = await import("../src/lib/db"); // dynamic import so the env var is set first
   for (const s of SCHEMA) await db.execute(s);
   for (const [id, n] of [
     ["u_alice", "Alice"],
@@ -20,8 +20,8 @@ beforeAll(async () => {
       sql: "INSERT INTO users VALUES (?,?,?)",
       args: [id, n, `${n.toLowerCase()}@example.com`],
     });
-  docs = await import("./documents");
-  shares = await import("./shares");
+  docs = await import("../src/lib/documents");
+  shares = await import("../src/lib/shares");
 });
 afterAll(() => fs.rmSync(DB_FILE, { force: true }));
 
