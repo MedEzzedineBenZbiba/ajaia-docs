@@ -133,10 +133,17 @@ export default function Editor(props: {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(patch),
       });
-      if (!res.ok)
+      if (!res.ok) {
+        if (res.status === 404)
+          throw new Error("You no longer have access to this document");
+        if (res.status === 403)
+          throw new Error("This document is now read-only for you");
+        if (res.status === 401)
+          throw new Error("Your session expired. Log in again");
         throw new Error(
           (await res.json().catch(() => ({}))).error ?? `Error ${res.status}`,
         );
+      }
       if (patch.title !== undefined) lastGoodTitle.current = patch.title;
       ok = true;
       setError("");
