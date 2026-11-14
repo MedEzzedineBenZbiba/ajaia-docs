@@ -23,3 +23,12 @@ export async function readJson(req: Request): Promise<unknown | null> {
     return null;
   }
 }
+
+export const shareSchema = z
+  .object({
+    email: z.string().trim().toLowerCase().email("Enter a valid email"),
+    role: z.enum(["viewer", "editor"], {
+      message: "Role must be viewer or editor",
+    }),
+  })
+  .strict();

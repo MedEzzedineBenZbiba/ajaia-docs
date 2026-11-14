@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth";
 import { getDocumentForUser } from "@/lib/documents";
 import Editor from "@/components/Editor";
+import SharePanel from "@/components/SharePanel";
 
 export default async function DocPage({
   params,
@@ -26,6 +27,7 @@ export default async function DocPage({
         role={doc.role}
         ownerName={doc.owner_name}
       />
+      {doc.role === "owner" && <SharePanel docId={doc.id} />}
     </main>
   );
 }
